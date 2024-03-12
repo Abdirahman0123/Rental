@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Vehicle Rental System</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<style>
+.error {
+	color: red;
+}
+</style>
+
+<script type="text/javascript" defer>
+	function calculateTotal() {
+		var days = document.getElementById("numberOfDays").value;
+		var rate = document.getElementById("rate").value;
+		var totalSum = days * rate;
+
+		document.getElementById("total").value = totalSum;
+
+	}
+	calculateTotal();
+</script>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">Q Rentals</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/rentVehicle}">Rent Vehicle</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/yourReservation}">Your
+							Reservation</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/allReservation}">All
+							Reservation</a></li>
+				</ul>
+				<div class="d-flex me-2">
+					<a class="nav-link active text-dark" aria-current="page" th:href="@{/logout}">Logout</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container" align="center">
+		<hr>
+		<h2>Rent a Vehicle</h2>
+
+		<form action="#" th:action="@{/saveReservation}"
+			th:object="${reservation}" method="POST">
+
+			<table>
+				<tr>
+					<td>First Name:</td>
+					<td><input type="text" readonly th:field="*{firstName}" /></td>
+					<td th:if="${#fields.hasErrors('firstName')}" th:errorclass="error"
+						th:errors="*{firstName}"></td>
+				</tr>
+				
+				<tr>
+					<td>Last Name:</td>
+					<td><input type="text" readonly th:field="*{lastName}" /></td>
+					<td th:if="${#fields.hasErrors('lastName')}" th:errorclass="error"
+						th:errors="*{lastName}"></td>
+				</tr>
+
+				<tr>
+					<td>Email:</td>
+					<td><input type="text" readonly th:field="*{email}" /></td>
+					<td th:if="${#fields.hasErrors('email')}" th:errorclass="error"
+						th:errors="*{email}"></td>
+				</tr>
+				<tr>
+					<td>Model:</td>
+					<td><input type="text" readonly th:field="*{model}" /></td>
+					<td th:if="${#fields.hasErrors('model')}" th:errorclass="error"
+						th:errors="*{model}"></td>
+				</tr>
+				<tr>
+
+					<td>Rate:</td>
+					<td><span>&pound;</span><input type="text" th:field="*{rate}" /></td>
+					<td th:if="${#fields.hasErrors('rate')}" th:errorclass="error"
+						th:errors="*{rate}"></td>
+				</tr>
+
+				<tr>
+					<td>Number of days:</td>
+					<td><input type="text" th:field="*{numberOfDays}"
+						oninput="calculateTotal()" /></td>
+					<td th:if="${#fields.hasErrors('numberOfDays')}"
+						th:errorclass="error" th:errors="*{numberOfDays}"></td>
+				</tr>
+
+				<tr>
+					<td>Total:</td>
+					<td> <span>&pound;</span><input type="text" th:id="total" readonly
+						th:field="*{total}" /></td>
+				</tr>
+				<tr>
+					<td><button type="submit" class="btn btn-primary col-12 ">Rent
+							Vehicle</button></td>
+					<td><a th:href="@{/rentVehicle}" class="btn btn-info col-12">
+							Go back</a></td>
+				</tr>
+
+			</table>
+
+		</form>
+	</div>
+</body>
+</html>
