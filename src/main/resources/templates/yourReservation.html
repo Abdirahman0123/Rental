@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Vehicle Rental System</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<style>
+.error {
+	color: red;
+}
+</style>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">Q Rentals</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/rentVehicle}">Rent Vehicle</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/yourReservation}">Your
+							Reservation</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/allReservation}">All
+							Reservation</a></li>
+				</ul>
+				<div class="d-flex me-2">
+					<a class="nav-link active text-dark" aria-current="page" th:href="@{/logout}">Logout</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="container" align="center">
+		<h1>Your Reservation</h1>
+		<!--  <form th:action="@{/yourReservation}" method="get">
+			<input type="text" name="keyword" th:value="${keyword}"
+				placeholder="Enter your email" size="20">
+			<button type="submit" class="btn btn-info">Search</button>
+
+		</form>-->
+
+		<table border="1"
+			class="table table-striped table-hover table-responsive-sm"
+			style="width: 90%">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Model</th>
+					<th>Rate</th>
+					<th>Number Of Days</th>
+					<th>Total</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="reservation : ${yourReservations}">
+					<td th:text="${reservation.firstName}"></td>
+					<td th:text="${reservation.lastName}"></td>
+					<td th:text="${reservation.email}"></td>
+					<td th:text="${reservation.model}"></td>
+					<td th:text="@{'&pound'+ ${reservation.rate} }"></td>
+					<td th:text="${reservation.numberOfDays}"></td>
+					<td th:text="@{'&pound'+ ${reservation.total} }"></td>					
+					<td><a th:href="@{deleteReservation/{id}(id=${reservation.id})}"
+						class="btn btn-danger" th:onclick="if(!(confirm('Are you sure?'))) return false">
+						Delete</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
